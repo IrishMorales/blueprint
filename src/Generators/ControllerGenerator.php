@@ -35,6 +35,7 @@ class ControllerGenerator extends AbstractClassGenerator implements Generator
 
         /** @var \Blueprint\Models\Controller $controller */
         foreach ($tree->controllers() as $controller) {
+            $this->addImport($controller, 'Inertia\\Inertia');
             $this->addImport($controller, 'Illuminate\\Http\\Request');
             if ($controller->fullyQualifiedNamespace() !== 'App\\Http\\Controllers') {
                 $this->addImport($controller, 'App\\Http\\Controllers\\Controller');

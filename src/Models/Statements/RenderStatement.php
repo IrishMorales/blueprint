@@ -4,6 +4,7 @@ namespace Blueprint\Models\Statements;
 
 class RenderStatement
 {
+    // Corresponds to either Blade view (ex. 'users.index') or Inertia page (ex. 'User/Index')
     private string $view;
 
     private array $data;
@@ -26,10 +27,13 @@ class RenderStatement
 
     public function output(): string
     {
-        $code = "return view('" . $this->view() . "'";
+        // TODO: Change $this->view() from ex. 'audits.index' to 'Audit/Index'
+        $code = "return Inertia::render('" . $this->view() . "'";
 
         if ($this->data()) {
-            $code .= ', compact(' . $this->buildParameters($this->data()) . ')';
+            // TODO: Fix for multiple parameters - only currently works for one
+            $params = $this->buildParameters($this->data());
+            $code .= ', [' . $params . ' => $' . $params . ']';
         }
 
         $code .= ');';
