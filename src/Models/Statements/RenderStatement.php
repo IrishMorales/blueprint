@@ -33,7 +33,7 @@ class RenderStatement
         if ($this->data()) {
             // TODO: Fix for multiple parameters - only currently works for one
             $params = $this->buildParameters($this->data());
-            $code .= ', [' . $params . ' => $' . $params . ']';
+            $code .= ", ['" . $params . "' => $" . $params . "]";
         }
 
         $code .= ');';
@@ -43,8 +43,6 @@ class RenderStatement
 
     private function buildParameters(array $data): string
     {
-        $parameters = array_map(fn ($parameter) => "'" . $parameter . "'", $data);
-
-        return implode(', ', $parameters);
+        return implode(', ', $data);
     }
 }
