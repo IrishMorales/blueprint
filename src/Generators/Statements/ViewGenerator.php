@@ -13,7 +13,7 @@ class ViewGenerator extends StatementGenerator implements Generator
 
     public function output(Tree $tree): array
     {
-        $stub = $this->filesystem->stub('view.stub');
+        $stub = $this->filesystem->stub('page.stub');
 
         /**
          * @var \Blueprint\Models\Controller $controller
@@ -42,7 +42,7 @@ class ViewGenerator extends StatementGenerator implements Generator
 
     protected function getStatementPath(string $view): string
     {
-        return 'resources/views/' . str_replace('.', '/', $view) . '.blade.php';
+        return 'resources/js/Pages/' . $view . '.tsx';
     }
 
     protected function populateStub(string $stub, RenderStatement $renderStatement): string
