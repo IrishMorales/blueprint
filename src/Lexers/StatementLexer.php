@@ -48,9 +48,9 @@ class StatementLexer implements Lexer
     {
         [$view, $data] = $this->parseWithStatement($statement);
 
-        $page = $this->generatePageName($view);
+        // $page = $this->generatePageName($view);
 
-        return new RenderStatement($page, $data);
+        return new RenderStatement($view, $data);
     }
 
     private function analyzeEvent(string $statement): FireStatement

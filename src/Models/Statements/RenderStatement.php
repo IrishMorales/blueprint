@@ -2,9 +2,10 @@
 
 namespace Blueprint\Models\Statements;
 
+use Illuminate\Support\Str;
+
 class RenderStatement
 {
-    // Corresponds to either Blade view (ex. 'users.index') or Inertia page (ex. 'User/Index')
     private string $view;
 
     private array $data;
@@ -17,7 +18,7 @@ class RenderStatement
 
     public function view(): string
     {
-        return $this->view;
+        return $this->generatePageName($this->view);
     }
 
     public function data(): array
@@ -43,5 +44,15 @@ class RenderStatement
     private function buildParameters(array $data): string
     {
         return implode(', ', $data);
+    }
+    
+    // Generates a page name (ex. Audits/Index) from a view name (ex. audits.index)
+    private function generatePageName(string $view)
+    {
+        [$table, $method] = explode('.', $view);
+        
+        $page = Str::studly($table) . '/' . Str::studly($method);
+        
+        return $page;
     }
 }
