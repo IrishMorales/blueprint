@@ -48,7 +48,9 @@ class StatementLexer implements Lexer
     {
         [$view, $data] = $this->parseWithStatement($statement);
 
-        return new RenderStatement($view, $data);
+        $page = $this->generatePageName($view);
+
+        return new RenderStatement($page, $data);
     }
 
     private function analyzeEvent(string $statement): FireStatement
@@ -208,5 +210,15 @@ class StatementLexer implements Lexer
         if (fnmatch('notify-*', $command)) {
             return $this->analyzeNotify($statement);
         }
+    }
+
+    // Generates a page name (ex. Audits/Index) from a view name (ex. audits.index)
+    private function generatePageName(string $view)
+    {
+        [$table, $method] = explode('.', $view);
+
+        $page = Str::studly($table) . '/' . Str::studly($method);
+
+        return $page;
     }
 }

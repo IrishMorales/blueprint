@@ -36,6 +36,7 @@ class ControllerGenerator extends AbstractClassGenerator implements Generator
         /** @var \Blueprint\Models\Controller $controller */
         foreach ($tree->controllers() as $controller) {
             $this->addImport($controller, 'Inertia\\Inertia');
+            $this->addImport($controller, 'Inertia\\Response');
             $this->addImport($controller, 'Illuminate\\Http\\Request');
             if ($controller->fullyQualifiedNamespace() !== 'App\\Http\\Controllers') {
                 $this->addImport($controller, 'App\\Http\\Controllers\\Controller');
@@ -188,7 +189,7 @@ class ControllerGenerator extends AbstractClassGenerator implements Generator
                 $method = str_replace('): Response' . PHP_EOL, ')' . PHP_EOL, $method);
             } else {
                 $returnType = match (true) {
-                    $statement instanceof RenderStatement => 'Illuminate\View\View',
+                    $statement instanceof RenderStatement => 'Inertia\Response',
                     $statement instanceof RedirectStatement => 'Illuminate\Http\RedirectResponse',
                     $statement instanceof ResourceStatement => config('blueprint.namespace') . '\\Http\\Resources\\' . ($controller->namespace() ? $controller->namespace() . '\\' : '') . $statement->name(),
                     default => 'Illuminate\Http\Response'

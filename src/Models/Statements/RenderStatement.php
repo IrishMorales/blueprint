@@ -27,7 +27,6 @@ class RenderStatement
 
     public function output(): string
     {
-        // TODO: Change $this->view() from ex. 'audits.index' to 'Audit/Index'
         $code = "return Inertia::render('" . $this->view() . "'";
 
         if ($this->data()) {
